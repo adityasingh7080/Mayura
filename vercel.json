@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/submit-lead", "destination": "/api/submit-lead.js" }
+  ]
+}

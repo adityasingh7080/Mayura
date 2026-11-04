@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mayura Jewelers - Pick Your Lucky Box</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at center top, #4a0914 0%, #200207 70%, #0d0103 100%);
+      color: #fce7f3;
+    }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-playfair { font-family: 'Playfair Display', serif; }
+    
+    .gold-text-gradient {
+      background: linear-gradient(135deg, #FFF6D1 0%, #F3CA68 40%, #E2AA36 70%, #9B6C14 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .gold-border {
+      border-image: linear-gradient(135deg, #F3CA68, #E2AA36, #9B6C14) 1;
+    }
+
+    .box-hover-effect {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .box-hover-effect:hover {
+      transform: translateY(-12px) scale(1.03);
+      filter: drop-shadow(0 20px 25px rgba(243, 202, 104, 0.35));
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg); }
+      20% { transform: rotate(-8deg); }
+      40% { transform: rotate(8deg); }
+      60% { transform: rotate(-5deg); }
+      80% { transform: rotate(5deg); }
+    }
+
+    .animate-shake {
+      animation: shake 0.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.08); }
+    }
+
+    .glow-bg {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-16 pt-6 px-4 flex flex-col items-center justify-start relative overflow-x-hidden selection:bg-amber-500 selection:text-red-950">
+
+  <!-- Background Ambience -->
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-amber-600/15 rounded-full blur-[140px] glow-bg"></div>
+  </div>
+
+  <main class="w-full max-w-md relative z-10 flex flex-col items-center">
+    
+    <!-- Branding Header -->
+    <header class="text-center mb-6">
+      <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-b from-amber-200 via-amber-500 to-amber-700 p-[1.5px] shadow-lg shadow-amber-900/40 mb-2">
+        <div class="w-full h-full bg-red-950 rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-crown text-amber-300 text-xl"></i>
+        </div>
+      </div>
+      <h1 class="font-cinzel text-3xl font-black tracking-wider gold-text-gradient uppercase leading-tight">
+        MAYURA
+      </h1>
+      <p class="font-cinzel text-xs tracking-[0.3em] text-amber-200/80 font-medium">JEWELERS</p>
+      <div class="flex items-center justify-center gap-2 mt-1">
+        <span class="h-[1px] w-6 bg-amber-500/40"></span>
+        <span class="text-[10px] tracking-widest text-amber-400/70 font-serif">SINCE 1998</span>
+        <span class="h-[1px] w-6 bg-amber-500/40"></span>
+      </div>
+    </header>
+
+    <!-- Campaign Title -->
+    <section class="text-center mb-6 w-full">
+      <h2 class="font-playfair text-3xl md:text-4xl font-bold italic text-amber-100 drop-shadow-md">
+        Pick Your <span class="gold-text-gradient not-italic font-extrabold">Lucky Box</span>
+      </h2>
+      <p class="text-xs text-amber-200/70 mt-2 tracking-wide font-light">
+        Choose one box and unlock an exclusive luxury reward!
+      </p>
+    </section>
+
+    <!-- 5 Gift Boxes Grid Stage -->
+    <section class="w-full grid grid-cols-6 gap-3 mb-8 px-2" id="boxesGrid">
+      
+      <!-- Box 1 -->
+      <div onclick="openBox(1)" class="col-span-2 box-hover-effect cursor-pointer flex flex-col items-center group">
+        <div class="relative w-full aspect-square bg-gradient-to-br from-red-900 via-red-950 to-stone-950 rounded-2xl border border-amber-500/40 p-3 shadow-xl flex items-center justify-center overflow-hidden">
+          <div class="absolute inset-0 bg-amber-400/5 group-hover:bg-amber-400/15 transition-all"></div>
+          <i class="fa-solid fa-box-archive text-4xl text-amber-400 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"></i>
+          <span class="absolute top-2 right-2 flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+          </span>
+        </div>
+        <span class="mt-2 text-xs font-semibold tracking-wide text-amber-200 bg-red-950/80 px-3 py-1 rounded-full border border-amber-500/30">Box 1</span>
+      </div>
+
+      <!-- Box 2 -->
+      <div onclick="openBox(2)" class="col-span-2 box-hover-effect cursor-pointer flex flex-col items-center group">
+        <div class="relative w-full aspect-square bg-gradient-to-br from-red-900 via-red-950 to-stone-950 rounded-2xl border border-amber-500/40 p-3 shadow-xl flex items-center justify-center overflow-hidden">
+          <div class="absolute inset-0 bg-amber-400/5 group-hover:bg-amber-400/15 transition-all"></div>
+          <i class="fa-solid fa-gift text-4xl text-amber-400 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"></i>
+        </div>
+        <span class="mt-2 text-xs font-semibold tracking-wide text-amber-200 bg-red-950/80 px-3 py-1 rounded-full border border-amber-500/30">Box 2</span>
+      </div>
+
+      <!-- Box 3 -->
+      <div onclick="openBox(3)" class="col-span-2 box-hover-effect cursor-pointer flex flex-col items-center group">
+        <div class="relative w-full aspect-square bg-gradient-to-br from-red-900 via-red-950 to-stone-950 rounded-2xl border border-amber-500/40 p-3 shadow-xl flex items-center justify-center overflow-hidden">
+          <div class="absolute inset-0 bg-amber-400/5 group-hover:bg-amber-400/15 transition-all"></div>
+          <i class="fa-solid fa-[#F3CA68] fa-gem text-4xl text-amber-400 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"></i>
+        </div>
+        <span class="mt-2 text-xs font-semibold tracking-wide text-amber-200 bg-red-950/80 px-3 py-1 rounded-full border border-amber-500/30">Box 3</span>
+      </div>
+
+      <!-- Row 2: Box 4 & Box 5 centered -->
+      <div class="col-span-1"></div>
+      
+      <!-- Box 4 -->
+      <div onclick="openBox(4)" class="col-span-2 box-hover-effect cursor-pointer flex flex-col items-center group">
+        <div class="relative w-full aspect-square bg-gradient-to-br from-red-900 via-red-950 to-stone-950 rounded-2xl border border-amber-500/40 p-3 shadow-xl flex items-center justify-center overflow-hidden">
+          <div class="absolute inset-0 bg-amber-400/5 group-hover:bg-amber-400/15 transition-all"></div>
+          <i class="fa-solid fa-box text-4xl text-amber-400 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"></i>
+        </div>
+        <span class="mt-2 text-xs font-semibold tracking-wide text-amber-200 bg-red-950/80 px-3 py-1 rounded-full border border-amber-500/30">Box 4</span>
+      </div>
+
+      <!-- Box 5 -->
+      <div onclick="openBox(5)" class="col-span-2 box-hover-effect cursor-pointer flex flex-col items-center group">
+        <div class="relative w-full aspect-square bg-gradient-to-br from-red-900 via-red-950 to-stone-950 rounded-2xl border border-amber-500/40 p-3 shadow-xl flex items-center justify-center overflow-hidden">
+          <div class="absolute inset-0 bg-amber-400/5 group-hover:bg-amber-400/15 transition-all"></div>
+          <i class="fa-solid fa-[#F3CA68] fa-coins text-4xl text-amber-400 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"></i>
+        </div>
+        <span class="mt-2 text-xs font-semibold tracking-wide text-amber-200 bg-red-950/80 px-3 py-1 rounded-full border border-amber-500/30">Box 5</span>
+      </div>
+
+      <div class="col-span-1"></div>
+    </section>
+
+    <!-- What You Can Win Banner -->
+    <section class="w-full bg-gradient-to-b from-red-950/80 to-stone-950/90 rounded-2xl p-4 border border-amber-500/30 backdrop-blur-md shadow-2xl">
+      <div class="text-center mb-3">
+        <h3 class="font-cinzel text-xs font-bold tracking-[0.2em] text-amber-400 uppercase">
+          — What You Can Win —
+        </h3>
+      </div>
+      
+      <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+        <div class="p-2 bg-red-900/30 rounded-lg border border-amber-500/10 flex flex-col items-center">
+          <i class="fa-solid fa-percent text-amber-400 text-sm mb-1"></i>
+          <span class="font-bold text-amber-100">Upto 10% OFF</span>
+          <span class="text-[9px] text-amber-200/60">Selected Jewellery</span>
+        </div>
+        <div class="p-2 bg-red-900/30 rounded-lg border border-amber-500/10 flex flex-col items-center">
+          <i class="fa-solid fa-gem text-amber-400 text-sm mb-1"></i>
+          <span class="font-bold text-amber-100">₹500 OFF</span>
+          <span class="text-[9px] text-amber-200/60">Above ₹10,000</span>
+        </div>
+        <div class="p-2 bg-red-900/30 rounded-lg border border-amber-500/10 flex flex-col items-center">
+          <i class="fa-solid fa-coins text-amber-400 text-sm mb-1"></i>
+          <span class="font-bold text-amber-100">Free Silver Coin</span>
+          <span class="text-[9px] text-amber-200/60">Eligible Purchase</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for Lead Capture & Claiming Reward -->
+  <div id="rewardModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-gradient-to-b from-red-950 via-stone-900 to-black border border-amber-500/50 rounded-3xl p-6 text-center relative shadow-2xl">
+      
+      <!-- Unboxed Reward View -->
+      <div id="unboxStep">
+        <div class="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-400 flex items-center justify-center mx-auto mb-3">
+          <i class="fa-solid fa-gift text-3xl text-amber-400"></i>
+        </div>
+        <h4 class="font-cinzel text-xs text-amber-400 tracking-widest uppercase">Congratulations!</h4>
+        <h3 id="prizeTitle" class="font-playfair text-2xl font-bold gold-text-gradient my-2">Free Silver Coin</h3>
+        <p class="text-xs text-amber-100/70 mb-5">Enter your details to claim your voucher now.</p>
+
+        <form id="claimForm" onsubmit="handleClaim(event)" class="space-y-3 text-left">
+          <div>
+            <label class="block text-[10px] text-amber-300 font-medium uppercase mb-1">Full Name</label>
+            <input type="text" id="userName" required placeholder="e.g. Rahul Sharma" class="w-full bg-red-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-sm text-amber-100 placeholder-amber-950/50 focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-[10px] text-amber-300 font-medium uppercase mb-1">WhatsApp Mobile Number</label>
+            <input type="tel" id="userPhone" required placeholder="10-digit phone number" class="w-full bg-red-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-sm text-amber-100 placeholder-amber-950/50 focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-[10px] text-amber-300 font-medium uppercase mb-1">City</label>
+            <input type="text" id="userCity" placeholder="e.g. Mumbai" class="w-full bg-red-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-sm text-amber-100 placeholder-amber-950/50 focus:outline-none focus:border-amber-400">
+          </div>
+          <button type="submit" class="w-full mt-4 py-3 bg-gradient-to-r from-amber-300 via-amber-500 to-amber-600 text-red-950 font-bold rounded-xl shadow-lg hover:brightness-110 transition-all font-cinzel text-sm">
+            CLAIM YOUR OFFER NOW
+          </button>
+        </form>
+      </div>
+
+      <!-- Voucher Code View -->
+      <div id="voucherStep" class="hidden">
+        <i class="fa-solid fa-circle-check text-4xl text-emerald-400 mb-2"></i>
+        <h3 class="font-cinzel text-lg font-bold text-amber-100">Voucher Reserved!</h3>
+        <p class="text-xs text-amber-200/70 mt-1">Show this coupon at Mayura Jewelers or present via WhatsApp.</p>
+
+        <div class="my-4 p-3 bg-red-950/90 border border-amber-500/40 rounded-xl">
+          <span class="block text-[10px] text-amber-400 tracking-widest uppercase">Coupon Code</span>
+          <span id="couponCodeDisplay" class="font-mono text-xl font-bold tracking-wider text-amber-200">MAYURA-8921</span>
+        </div>
+
+        <a id="whatsappBtn" target="_blank" href="#" class="w-full flex items-center justify-center gap-2 py-3 bg-emerald-600 text-white font-bold rounded-xl shadow-lg hover:bg-emerald-500 transition-all text-sm mb-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> Redeem via WhatsApp Now
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const targetWhatsApp = "919892239320";
+    const prizes = [
+      "Upto 10% OFF on Selected Jewellery",
+      "₹500 OFF on Purchase Above ₹10,000",
+      "Free Silver Coin on Eligible Purchase",
+      "Free Jewellery Cleaning & Polishing",
+      "₹1,000 OFF on Your Next Purchase"
+    ];
+
+    let currentPrize = "";
+    let generatedCoupon = "";
+
+    function openBox(boxId) {
+      if (localStorage.getItem('mayura_claimed_reward')) {
+        showVoucher(JSON.parse(localStorage.getItem('mayura_claimed_reward')));
+        return;
+      }
+
+      currentPrize = prizes[Math.floor(Math.random() * prizes.length)];
+      generatedCoupon = "MAYURA-LUCKY-" + Math.floor(1000 + Math.random() * 9000);
+
+      document.getElementById('prizeTitle').innerText = currentPrize;
+      document.getElementById('rewardModal').classList.remove('hidden');
+
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { y: 0.6 }
+      });
+    }
+
+    async function handleClaim(event) {
+      event.preventDefault();
+      
+      const leadData = {
+        name: document.getElementById('userName').value,
+        phone: document.getElementById('userPhone').value,
+        city: document.getElementById('userCity').value || 'Mumbai',
+        couponCode: generatedCoupon,
+        prize: currentPrize
+      };
+
+      // Save locally
+      localStorage.setItem('mayura_claimed_reward', JSON.stringify(leadData));
+
+      // Post to Vercel Serverless API (MongoDB)
+      try {
+        await fetch('/api/submit-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(leadData)
+        });
+      } catch (err) {
+        console.error("MongoDB API Sync error:", err);
+      }
+
+      showVoucher(leadData);
+    }
+
+    function showVoucher(data) {
+      document.getElementById('rewardModal').classList.remove('hidden');
+      document.getElementById('unboxStep').classList.add('hidden');
+      document.getElementById('voucherStep').classList.remove('hidden');
+      document.getElementById('couponCodeDisplay').innerText = data.couponCode;
+
+      const message = `Hello Mayura Jewelers! I unlocked *${data.prize}* on your Lucky Box campaign.
+
+` +
+                      `Name: ${data.name}
+` +
+                      `Phone: ${data.phone}
+` +
+                      `City: ${data.city}
+` +
+                      `Coupon Code: ${data.couponCode}
+
+` +
+                      `I would like to redeem this voucher!`;
+
+      document.getElementById('whatsappBtn').href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(message)}`;
+    }
+  </script>
+</body>
+</html>
