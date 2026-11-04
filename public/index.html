@@ -22,10 +22,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    
-    .gold-border {
-      border-image: linear-gradient(135deg, #F3CA68, #E2AA36, #9B6C14) 1;
-    }
 
     .box-hover-effect {
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -95,7 +91,7 @@
       </p>
     </section>
 
-    <!-- 5 Identical Gift Boxes Grid Stage -->
+    <!-- 5 Gift Boxes Grid Stage -->
     <section class="w-full grid grid-cols-6 gap-3 mb-8 px-2" id="boxesGrid">
       
       <!-- Box 1 -->
@@ -129,7 +125,7 @@
         <span class="mt-2 text-xs font-semibold tracking-wide text-amber-200 bg-red-950/80 px-3 py-1 rounded-full border border-amber-500/30">Box 3</span>
       </div>
 
-      <!-- Row 2: Box 4 & Box 5 centered -->
+      <!-- Row 2: Box 4 & Box 5 -->
       <div class="col-span-1"></div>
       
       <!-- Box 4 -->
@@ -181,7 +177,7 @@
     </section>
   </main>
 
-  <!-- Modal for Lead Capture & Claiming Reward -->
+  <!-- Modal for Lead Capture -->
   <div id="rewardModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
     <div class="w-full max-w-sm bg-gradient-to-b from-red-950 via-stone-900 to-black border border-amber-500/50 rounded-3xl p-6 text-center relative shadow-2xl">
       
@@ -246,11 +242,6 @@
     let generatedCoupon = "";
 
     function openBox(boxId) {
-      if (localStorage.getItem('mayura_claimed_reward')) {
-        showVoucher(JSON.parse(localStorage.getItem('mayura_claimed_reward')));
-        return;
-      }
-
       currentPrize = prizes[Math.floor(Math.random() * prizes.length)];
       generatedCoupon = "MAYURA-LUCKY-" + Math.floor(1000 + Math.random() * 9000);
 
@@ -266,6 +257,10 @@
 
     async function handleClaim(event) {
       event.preventDefault();
+
+      const submitBtn = event.target.querySelector('button[type="submit"]');
+      submitBtn.innerText = "SAVING YOUR OFFER...";
+      submitBtn.disabled = true;
       
       const leadData = {
         name: document.getElementById('userName').value,
@@ -275,20 +270,22 @@
         prize: currentPrize
       };
 
-      // Save locally
-      localStorage.setItem('mayura_claimed_reward', JSON.stringify(leadData));
-
       // Post to Vercel Serverless API (MongoDB)
       try {
-        await fetch('/api/submit-lead', {
+        const response = await fetch('/api/submit-lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(leadData)
         });
+        
+        const resData = await response.json();
+        console.log("MongoDB Save Response:", resData);
       } catch (err) {
         console.error("MongoDB API Sync error:", err);
       }
 
+      // Save locally
+      localStorage.setItem('mayura_claimed_reward', JSON.stringify(leadData));
       showVoucher(leadData);
     }
 
